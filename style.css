@@ -160,14 +160,27 @@ img {
   z-index: 2;
   left: 50%;
   bottom: clamp(5rem, 5vh, 3.2rem);
-  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 0.6em;
   color: rgba(250, 248, 244, 0.75);
   font-size: clamp(0.68rem, 1.3vw, 0.8rem);
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.swipe-to {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.swipe-hint > span:first-child {
+  margin-right: 0;
+}
+
+.swipe-arrow {
+  margin-left: 0.6em;
 }
 
 .swipe-arrow {
