@@ -158,7 +158,7 @@ img {
 .swipe-hint {
   position: absolute;
   z-index: 2;
-  left: 47.5%;
+  left: 50%;
   bottom: clamp(5rem, 5vh, 3.2rem);
   transform: translateX(-50%);
   display: flex;
