@@ -127,84 +127,88 @@
     { passive: false }
   );
 
-  var touchStartX = 0;
-  var touchStartY = 0;
-  var touchActive = false;
-  var touchDecided = false;
-  var touchIsHorizontal = false;
-  var swipeThreshold = 50;
+ var touchStartX = 0;
+var touchStartY = 0;
+var touchActive = false;
+var touchDecided = false;
+var touchIsHorizontal = false;
+var swipeThreshold = 50;
 
-  var appEl = document.getElementById("app");
+var appEl = document.getElementById("app");
 
-  appEl.addEventListener(
-    "touchstart",
-    function (e) {
-      if (e.touches.length !== 1) {
-        return;
-      }
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchActive = true;
-      touchDecided = false;
-      touchIsHorizontal = false;
-    },
-    { passive: true }
-  );
+appEl.addEventListener(
+  "touchstart",
+  function (e) {
+    if (e.touches.length !== 1) {
+      return;
+    }
 
-  appEl.addEventListener(
-    "touchmove",
-    function (e) {
-      if (!touchActive || e.touches.length !== 1) {
-        return;
-      }
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
 
-      var dx = e.touches[0].clientX - touchStartX;
-      var dy = e.touches[0].clientY - touchStartY;
-
-      if (!touchDecided) {
-        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
-          touchDecided = true;
-          touchIsHorizontal = Math.abs(dx) > Math.abs(dy);
-        }
-      }
-
-      if (touchIsHorizontal) {
-        e.preventDefault();
-      }
-    },
-    { passive: false }
-  );
-
-  appEl.addEventListener(
-    "touchend",
-    function (e) {
-      if (!touchActive) {
-        return;
-      }
-      touchActive = false;
-
-      if (!touchIsHorizontal || isLocked) {
-        return;
-      }
-
-      var dx = e.changedTouches[0].clientX - touchStartX;
-
-      if (dx <= -swipeThreshold) {
-        lockNavigation();
-        step(1);
-      } else if (dx >= swipeThreshold) {
-        lockNavigation();
-        step(-1);
-      }
-    },
-    { passive: true }
-  );
-
-  appEl.addEventListener("touchcancel", function () {
-    touchActive = false;
+    touchActive = true;
     touchDecided = false;
     touchIsHorizontal = false;
-  });
+  },
+  { passive: true }
+);
 
+appEl.addEventListener(
+  "touchmove",
+  function (e) {
+    if (!touchActive || e.touches.length !== 1) {
+      return;
+    }
+
+    var dx = e.touches[0].clientX - touchStartX;
+    var dy = e.touches[0].clientY - touchStartY;
+
+    if (!touchDecided) {
+      if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+        touchDecided = true;
+        touchIsHorizontal = Math.abs(dx) > Math.abs(dy);
+      }
+    }
+
+    // Horizontales Wischen übernehmen wir selbst.
+    // Vertikales Wischen bleibt normales Smartphone-Verhalten.
+    if (touchIsHorizontal) {
+      e.preventDefault();
+    }
+  },
+  { passive: false }
+);
+
+appEl.addEventListener(
+  "touchend",
+  function (e) {
+    if (!touchActive) {
+      return;
+    }
+
+    touchActive = false;
+
+    if (!touchIsHorizontal || isLocked) {
+      return;
+    }
+
+    var dx = e.changedTouches[0].clientX - touchStartX;
+
+    if (dx < -swipeThreshold) {
+      // Nach links → nächste Seite
+      step(1);
+    } else if (dx > swipeThreshold) {
+      // Nach rechts → vorherige Seite
+      step(-1);
+    }
+  },
+  { passive: true }
+);
+
+appEl.addEventListener("touchcancel", function () {
+  touchActive = false;
+  touchDecided = false;
+  touchIsHorizontal = false;
+});
   updateNav();
 })();
