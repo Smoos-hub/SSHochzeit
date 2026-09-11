@@ -3,142 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Steven &amp; Svenja — Wir heiraten</title>
-<meta name="description" content="Wir heiraten am 11. Dezember 2026 — begleitet uns an unserem großen Tag.">
-
+<title>Svenja &amp; Steven — Einladung zu unserer Hochzeit</title>
+<meta name="description" content="Einladung zur Hochzeit von Svenja und Steven am 11. Dezember 2026 in Tafers.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app" id="app">
+<div id="app" role="region" aria-roledescription="carousel" aria-label="Hochzeitseinladung, sechs Seiten">
 
-  <!-- Countdown-Leiste, auf jeder Seite sichtbar -->
-  <div class="countdown-bar" id="countdown-bar">
-    <span>Noch</span>
-    <span class="countdown-bar__num" id="cd-days">00</span><span>Tage</span>
-    <span class="countdown-bar__sep">&middot;</span>
-    <span class="countdown-bar__num" id="cd-hours">00</span><span>:</span><span class="countdown-bar__num" id="cd-minutes">00</span><span>:</span><span class="countdown-bar__num" id="cd-seconds">00</span>
-    <span>bis zur Hochzeit</span>
-  </div>
+  <main id="track">
 
-  <!-- Die einzelnen Seiten werden von js/script.js hier eingefügt -->
-  <div class="book" id="book"></div>
-
-  <!-- Blätter-Navigation -->
-  <nav class="book-nav">
-    <button class="book-nav__arrow book-nav__arrow--prev" id="nav-prev" aria-label="Vorherige Seite">
-      <svg viewBox="0 0 24 24"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <span class="book-nav__counter" id="nav-counter">1 / 1</span>
-    <button class="book-nav__arrow book-nav__arrow--next" id="nav-next" aria-label="Nächste Seite">
-      <svg viewBox="0 0 24 24"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </nav>
-</div>
-
-<!-- Lightbox für Fotos -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox__close" id="lightbox-close" aria-label="Schließen">&times;</button>
-  <img src="" alt="" id="lightbox-img">
-</div>
-
-<!-- ===========================================================
-     SEITEN-VORLAGEN
-     Diese <template>-Blöcke werden von js/script.js in der
-     richtigen Reihenfolge als Buchseiten zusammengesetzt.
-     Hier kannst du Texte, Namen, Ort und Ablauf anpassen.
-     =========================================================== -->
-
-<template id="tpl-hero">
-  <div class="page page--hero">
-    <div class="hero-ornament" aria-hidden="true">
-      <svg viewBox="0 0 200 200">
-        <path d="M100 20 C 60 40, 40 80, 100 100 C 160 80, 140 40, 100 20 Z" fill="none" stroke="currentColor" stroke-width="1"/>
-        <circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="0.6"/>
-        <path d="M40 100 Q 100 60 160 100 Q 100 140 40 100 Z" fill="none" stroke="currentColor" stroke-width="0.6"/>
-      </svg>
-    </div>
-    <div class="page__inner">
-      <p class="hero__eyebrow">Einladung zur Hochzeit</p>
-      <h1 class="hero__names">Steven <span class="hero__amp">&amp;</span> Svenja</h1>
-      <p class="hero__date">11. Dezember 2026 &middot; Musterstadt</p>
-    </div>
-    <p class="hero__hint">Zum Weiterblättern die Pfeile nutzen oder wischen</p>
-  </div>
-</template>
-
-<template id="tpl-story">
-  <div class="page page--story">
-    <div class="page__inner">
-      <p class="section-label">Ein paar Worte</p>
-      <h2 class="story__heading">Wir sagen Ja</h2>
-      <p class="story__text">
-        Nach [X] gemeinsamen Jahren ist es soweit — wir geben uns das Jawort
-        und möchten diesen Tag mit den Menschen feiern, die uns am wichtigsten
-        sind. Wir freuen uns riesig, ihn mit euch zu teilen.
-      </p>
-    </div>
-  </div>
-</template>
-
-<template id="tpl-future">
-  <div class="page page--future">
-    <div class="page__inner page__inner--future">
-      <h2 class="story__heading">Unsere gemeinsame Zukunft</h2>
-      <div class="future-photos"></div>
-    </div>
-  </div>
-</template>
-
-<template id="tpl-schedule">
-  <div class="page page--schedule">
-    <div class="page__inner page__inner--future">
-      <p class="section-label">Der Ablauf</p>
-      <div class="schedule-wrap">
-        <ul class="schedule">
-          <li class="schedule__item">
-            <span class="schedule__time">14:00</span>
-            <span class="schedule__label">Trauung</span>
-          </li>
-          <li class="schedule__item">
-            <span class="schedule__time">15:00</span>
-            <span class="schedule__label">Sektempfang</span>
-          </li>
-          <li class="schedule__item">
-            <span class="schedule__time">18:00</span>
-            <span class="schedule__label">Abendessen</span>
-          </li>
-          <li class="schedule__item">
-            <span class="schedule__time">21:00</span>
-            <span class="schedule__label">Party</span>
-          </li>
-        </ul>
+    <section id="page-1" class="page" aria-label="Seite 1 von 6: Einladung">
+      <div class="cover-media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1800&q=80&auto=format&fit=crop" alt="" loading="eager">
+        <div class="cover-scrim"></div>
       </div>
-    </div>
-  </div>
-</template>
+      <div class="cover-content">
+        <p class="cover-eyebrow reveal" data-delay="0">Einladung zu unserer Hochzeit</p>
+        <h1 class="cover-names reveal" data-delay="1">Svenja <span class="amp">&amp;</span> Steven</h1>
+        <div class="cover-meta reveal" data-delay="2">
+          <span>11. Dezember 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>Tafers</span>
+        </div>
+      </div>
+      <div class="swipe-hint reveal" data-delay="3">
+        <span>Swipe to begin</span>
+        <span class="swipe-arrow" aria-hidden="true">&rarr;</span>
+      </div>
+    </section>
 
-<template id="tpl-footer">
-  <div class="page page--footer">
-    <div class="page__inner">
-      <p class="section-label">Wo wir feiern</p>
-      <h2 class="story__heading">Schloss Lindenhof</h2>
-      <p class="details__address">
-        Lindenhofweg 4<br>
-        12345 Musterstadt
-      </p>
-      <a href="https://maps.google.com/?q=Schloss+Lindenhof+Musterstadt" target="_blank" rel="noopener" class="details__map-link">
-        Route planen
-      </a>
-      <p class="footer__note">Wir freuen uns auf euch.</p>
-      <p class="footer__names">Steven &amp; Svenja</p>
+    <section id="page-2" class="page" aria-label="Seite 2 von 6: Wir sagen Ja">
+      <div class="editorial">
+        <h2 class="page-title">Wir sagen Ja</h2>
+        <div class="ornament" aria-hidden="true">
+          <span class="ornament-line"></span>
+          <span class="ornament-mark">&#10052;</span>
+          <span class="ornament-line"></span>
+        </div>
+        <p class="editorial-text">
+          Mit viel Freude möchten wir diesen besonderen Tag mit unseren Liebsten feiern. Wir freuen uns darauf, gemeinsam mit euch einen unvergesslichen Tag voller Liebe, Freude und schöner Momente zu erleben.
+        </p>
+      </div>
+    </section>
+
+    <section id="page-3" class="page" aria-label="Seite 3 von 6: Unser Weg bisher">
+  <div class="photostory-heading">
+    <p class="photostory-eyebrow">Unsere gemeinsame Reise bisher</p>
+  </div>
+
+  <!-- REIHE 1: FOTO 1–10 -->
+  <div class="marquee-row" style="--duration:60s;">
+    <div class="marquee-track marquee-right">
+
+      <div class="marquee-set">
+        <img src="foto1.jpg" alt="Foto 1" loading="lazy">
+        <img src="foto2.jpg" alt="Foto 2" loading="lazy">
+        <img src="foto3.jpg" alt="Foto 3" loading="lazy">
+        <img src="foto4.jpg" alt="Foto 4" loading="lazy">
+        <img src="foto5.jpg" alt="Foto 5" loading="lazy">
+        <img src="foto6.jpg" alt="Foto 6" loading="lazy">
+        <img src="foto7.jpg" alt="Foto 7" loading="lazy">
+        <img src="foto8.jpg" alt="Foto 8" loading="lazy">
+        <img src="foto9.jpg" alt="Foto 9" loading="lazy">
+        <img src="foto10.jpeg" alt="Foto 10" loading="lazy">
+      </div>
+
+      <div class="marquee-set" aria-hidden="true">
+        <img src="foto1.jpg" alt="" loading="lazy">
+        <img src="foto2.jpg" alt="" loading="lazy">
+        <img src="foto3.jpg" alt="" loading="lazy">
+        <img src="foto4.jpg" alt="" loading="lazy">
+        <img src="foto5.jpg" alt="" loading="lazy">
+        <img src="foto6.jpg" alt="" loading="lazy">
+        <img src="foto7.jpg" alt="" loading="lazy">
+        <img src="foto8.jpg" alt="" loading="lazy">
+        <img src="foto9.jpg" alt="" loading="lazy">
+        <img src="foto10.jpeg" alt="" loading="lazy">
+      </div>
+
     </div>
   </div>
-</template>
+
+
+  <!-- REIHE 2: FOTO 11–20 -->
+  <div class="marquee-row" style="--duration:60s;">
+    <div class="marquee-track marquee-left">
+
+      <div class="marquee-set">
+        <img src="foto11.jpeg" alt="Foto 11" loading="lazy">
+        <img src="foto12.jpeg" alt="Foto 12" loading="lazy">
+        <img src="foto13.jpeg" alt="Foto 13" loading="lazy">
+        <img src="foto14.jpeg" alt="Foto 14" loading="lazy">
+        <img src="foto15.jpeg" alt="Foto 15" loading="lazy">
+        <img src="foto16.jpeg" alt="Foto 16" loading="lazy">
+        <img src="foto17.jpeg" alt="Foto 17" loading="lazy">
+        <img src="foto18.jpeg" alt="Foto 18" loading="lazy">
+        <img src="foto19.jpeg" alt="Foto 19" loading="lazy">
+        <img src="foto20.jpeg" alt="Foto 20" loading="lazy">
+      </div>
+
+      <div class="marquee-set" aria-hidden="true">
+        <img src="foto11.jpeg" alt="" loading="lazy">
+        <img src="foto12.jpeg" alt="" loading="lazy">
+        <img src="foto13.jpeg" alt="" loading="lazy">
+        <img src="foto14.jpeg" alt="" loading="lazy">
+        <img src="foto15.jpeg" alt="" loading="lazy">
+        <img src="foto16.jpeg" alt="" loading="lazy">
+        <img src="foto17.jpeg" alt="" loading="lazy">
+        <img src="foto18.jpeg" alt="" loading="lazy">
+        <img src="foto19.jpeg" alt="" loading="lazy">
+        <img src="foto20.jpeg" alt="" loading="lazy">
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- REIHE 3: FOTO 21–30 -->
+  <div class="marquee-row" style="--duration:70s;">
+    <div class="marquee-track marquee-right">
+
+      <div class="marquee-set">
+        <img src="foto21.jpeg" alt="Foto 21" loading="lazy">
+        <img src="foto22.jpeg" alt="Foto 22" loading="lazy">
+        <img src="foto23.jpeg" alt="Foto 23" loading="lazy">
+        <img src="foto24.jpeg" alt="Foto 24" loading="lazy">
+        <img src="foto25.jpeg" alt="Foto 25" loading="lazy">
+        <img src="foto26.jpeg" alt="Foto 26" loading="lazy">
+        <img src="foto27.jpeg" alt="Foto 27" loading="lazy">
+        <img src="foto28.jpeg" alt="Foto 28" loading="lazy">
+        <img src="foto29.jpeg" alt="Foto 29" loading="lazy">
+        <img src="foto30.jpeg" alt="Foto 30" loading="lazy">
+<img src="foto31.jpeg" alt="Foto 30" loading="lazy">
+      </div>
+
+      <div class="marquee-set" aria-hidden="true">
+        <img src="foto21.jpeg" alt="" loading="lazy">
+        <img src="foto22.jpeg" alt="" loading="lazy">
+        <img src="foto23.jpeg" alt="" loading="lazy">
+        <img src="foto24.jpeg" alt="" loading="lazy">
+        <img src="foto25.jpeg" alt="" loading="lazy">
+        <img src="foto26.jpeg" alt="" loading="lazy">
+        <img src="foto27.jpeg" alt="" loading="lazy">
+        <img src="foto28.jpeg" alt="" loading="lazy">
+        <img src="foto29.jpeg" alt="" loading="lazy">
+        <img src="foto30.jpeg" alt="" loading="lazy">
+<img src="foto31.jpeg" alt="" loading="lazy">
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+    <section id="page-4" class="page" aria-label="Seite 4 von 6: Unsere Zukunft">
+      <div class="future-content">
+        <h2 class="page-title">Unsere Zukunft</h2>
+        <p class="future-subline">Ein neues Kapitel beginnt.</p>
+        <div class="collage">
+          <div class="collage-main">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80&auto=format&fit=crop" alt="Brautpaar geht gemeinsam einen Weg entlang" loading="lazy">
+          </div>
+          <div class="collage-small collage-small-1">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=700&q=80&auto=format&fit=crop" alt="Brautpaar bei Sonnenuntergang am Horizont" loading="lazy">
+          </div>
+          <div class="collage-small collage-small-2">
+            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=700&q=80&auto=format&fit=crop" alt="Detailaufnahme festlich gedeckter Tisch" loading="lazy">
+          </div>
+        </div>
+        <p class="future-names">Svenja <span class="amp">&amp;</span> Steven</p>
+        <p class="future-date">11. Dezember 2026</p>
+      </div>
+    </section>
+
+    <section id="page-5" class="page page--dark" aria-label="Seite 5 von 6: Tagesablauf">
+      <div class="schedule-content">
+        <h2 class="page-title page-title--light">Tagesablauf</h2>
+        <div class="ornament ornament--light" aria-hidden="true">
+          <span class="ornament-line"></span>
+          <span class="ornament-mark">&#10052;</span>
+          <span class="ornament-line"></span>
+        </div>
+        <ol class="schedule-list">
+          <li class="schedule-item">
+            <span class="schedule-time">14:30 Uhr</span>
+            <span class="schedule-event">Trauung in der Standestamt Tafers</span>
+          </li>
+          <li class="schedule-item">
+            <span class="schedule-time">15:30 Uhr</span>
+            <span class="schedule-event">Apero</span>
+          </li>
+          <li class="schedule-item">
+            <span class="schedule-time">17:00 Uhr</span>
+            <span class="schedule-event">Fotos</span>
+          </li>
+          <li class="schedule-item">
+            <span class="schedule-time">19:00 Uhr</span>
+            <span class="schedule-event">Abendessen Restaurant</span>
+          </li>
+          <li class="schedule-item">
+            <span class="schedule-time">21:30 Uhr</span>
+            <span class="schedule-event">Gemütlich ausklingen</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="page-6" class="page" aria-label="Seite 6 von 6: Wo und Wann">
+      <div class="location-content">
+        <h2 class="page-title">Wo <span class="amp">&amp;</span> Wann</h2>
+        <div class="ornament" aria-hidden="true">
+          <span class="ornament-line"></span>
+          <span class="ornament-mark">&#10052;</span>
+          <span class="ornament-line"></span>
+        </div>
+        <div class="location-details">
+          <div class="location-item">
+            <span class="location-label">Datum</span>
+            <span class="location-value">11. Dezember 2026</span>
+          </div>
+          <div class="location-item">
+            <span class="location-label">Beginn</span>
+            <span class="location-value">14:30 Uhr</span>
+          </div>
+          <div class="location-item">
+            <span class="location-label">Ort</span>
+            <span class="location-value">Standesamt<br>Tafers</span>
+          </div>
+        </div>
+        <p class="location-closing">Wir freuen uns, diesen Tag mit euch zu feiern.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="page-nav" aria-label="Seitennavigation">
+    <button type="button" class="nav-dot is-active" data-page="0" aria-label="Zu Seite 1, Einladung" aria-current="true">01</button>
+    <button type="button" class="nav-dot" data-page="1" aria-label="Zu Seite 2, Wir sagen Ja">02</button>
+    <button type="button" class="nav-dot" data-page="2" aria-label="Zu Seite 3, Unser Weg bisher">03</button>
+    <button type="button" class="nav-dot" data-page="3" aria-label="Zu Seite 4, Unsere Zukunft">04</button>
+    <button type="button" class="nav-dot" data-page="4" aria-label="Zu Seite 5, Tagesablauf">05</button>
+    <button type="button" class="nav-dot" data-page="5" aria-label="Zu Seite 6, Wo und Wann">06</button>
+  </nav>
+
+</div>
 
 <script src="script.js"></script>
 </body>
